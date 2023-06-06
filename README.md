@@ -43,7 +43,7 @@ Installation includes several packages:
 
 ## Demonstration
 
-Video demonstration goes here
+[EMployee Tracker Video Demonstration](https://drive.google.com/file/d/179dDp4x00t7UXjVzlv3IFK5gxq2tLc3c/view)
 
 ## License
 
@@ -52,6 +52,6 @@ MIT License
 
 - Name: Philip Kubisz
 
-- GitHub: [Your GitHub Profile](https://github.com/PhilKubz?tab=repositories)
+- [GitHub Profile](https://github.com/PhilKubz?tab=repositories)
 
 - Email: philip.kubisz@gmail.com
