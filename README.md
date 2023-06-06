@@ -1,18 +1,18 @@
-## Employee Tracker
+# Employee Tracker
 
 ## Table of Contents
 
-- [Description](#description)
-- [Installation](#installation)
-- [Usage](#usage)
-- [License](#license)
-- [Contact](#contact)
+- [Description](##description)
+- [Installation](##installation)
+- [Usage](##usage)
+- [License](##license)
+- [Contact](##contact)
 
-# Description
+## Description
 
 The Employee Tracker is an application designed to create a method for maintaining a workforce in regards ot information of departments, employees, and their roles. This application is designed to run locally and store all information using the MySQL database. The Program is accessed using the CLI, and from this there is a series of options in the form of a prompt that allow the user to reach their desired goal. With ease of access and a simple implementation of means to GET/POST to the database, it is the perfect tool that provides a scalable means for a business!
 
-# Installation
+## Installation
 
 Installation includes several packages:
 - `npm install` or `npm i` to install the node modules package
@@ -20,7 +20,7 @@ Installation includes several packages:
 - `npm install dotenv` for the dotenv package
 - `npm install mysql2` for the MySQL2 package
 
-# Usage
+## Usage
 
 1. Clone the repository onto a local machine.
 
@@ -42,15 +42,17 @@ Installation includes several packages:
 
 7. From the CLI, one can now view/add to adjust any of the information in the database using the series of prompts
 
-# Demonstration
+## Demonstration
 
 Video demonstration goes here
 
-# License
+## License
 
 MIT License
 
 
 - Name: Philip Kubisz
+
 - GitHub: [Your GitHub Profile](https://github.com/PhilKubz?tab=repositories)
+
 - Email: philip.kubisz@gmail.com
