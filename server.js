@@ -17,7 +17,7 @@ const department = new Department();
 const role = new Role();
 const employee = new Employee();
 
-// add department route
+// department route post
 app.post('/api/department', (req, res) => {
   const { name } = req.body;
   department
@@ -30,7 +30,7 @@ app.post('/api/department', (req, res) => {
     });
 });
 
-// add role route
+// role route post
 app.post('/api/role', (req, res) => {
   const { title, salary, departmentId } = req.body;
   role
@@ -43,7 +43,7 @@ app.post('/api/role', (req, res) => {
     });
 });
 
-// add employee route
+// employee route post
 app.post('/api/employee', (req, res) => {
   const { firstName, lastName, roleId, managerId } = req.body;
   employee
@@ -70,7 +70,7 @@ app.put('/api/employee/:id/role', (req, res) => {
     });
 });
 
-// departments route
+// departments route get
 app.get('/api/departments', (req, res) => {
   department
     .getAllDepartments()
@@ -82,7 +82,7 @@ app.get('/api/departments', (req, res) => {
     });
 });
 
-// roles route
+// roles route get
 app.get('/api/roles', (req, res) => {
   role
     .getAllRoles()
@@ -94,7 +94,7 @@ app.get('/api/roles', (req, res) => {
     });
 });
 
-// employees route
+// employees route get
 app.get('/api/employees', (req, res) => {
   employee
     .getAllEmployees()
@@ -110,7 +110,7 @@ app.use((req, res) => {
   res.status(404).end();
 });
 
-// User imput prompts
+// User input prompts
 function promptUser() {
   inquirer
     .prompt([
@@ -119,83 +119,223 @@ function promptUser() {
         name: 'action',
         message: 'What would you like to do?',
         choices: [
+          'Add department',
+          'Add role',
+          'Add employee',
+          'Update employee role',
           'View all departments',
           'View all roles',
           'View all employees',
-          'Add a department',
-          'Add a role',
-          'Add an employee',
-          'Update an employee role',
           'Exit',
         ],
       },
     ])
     .then((answers) => {
       switch (answers.action) {
+        case 'Add department':
+          addDepartmentPrompt();
+          break;
+        case 'Add role':
+          addRolePrompt();
+          break;
+        case 'Add employee':
+          addEmployeePrompt();
+          break;
+        case 'Update employee role':
+          updateEmployeeRolePrompt();
+          break;
         case 'View all departments':
-          department
-            .getAllDepartments()
-            .then((departments) => {
-              console.table(departments);
-              promptUser();
-            })
-            .catch((err) => console.error(err));
+          viewAllDepartments();
           break;
         case 'View all roles':
-          role
-            .getAllRoles()
-            .then((roles) => {
-              console.table(roles);
-              promptUser();
-            })
-            .catch((err) => console.error(err));
+          viewAllRoles();
           break;
         case 'View all employees':
-          employee
-            .getAllEmployees()
-            .then((employees) => {
-              console.table(employees);
-              promptUser();
-            })
-            .catch((err) => console.error(err));
+          viewAllEmployees();
           break;
-        case 'Add a department':
-          inquirer
-            .prompt([
-              {
-                type: 'input',
-                name: 'name',
-                message: 'Enter the department name:',
-              },
-            ])
-            .then((departmentData) => {
-              fetch('/api/department', {
-                method: 'POST',
-                headers: {
-                  'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(departmentData),
-              })
-                .then((response) => response.json())
-                .then((data) => {
-                  console.log(data.message);
-                  promptUser();
-                })
-                .catch((err) => console.error(err));
-            });
+        case 'Exit':
+          console.log('Goodbye!');
+          process.exit();
           break;
         default:
-          console.log('Invalid choice. Please try again.');
-          promptUser();
+          console.log('Invalid action');
+          break;
       }
-    })
-    .catch((err) => console.error(err));
+    });
 }
 
-// Start the server
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-});
+// Add department prompt
+function addDepartmentPrompt() {
+  inquirer
+    .prompt([
+      {
+        type: 'input',
+        name: 'name',
+        message: 'Enter the name of the department:',
+      },
+    ])
+    .then((answers) => {
+      department
+        .addDepartment(answers.name)
+        .then(() => {
+          console.log('Department added successfully!');
+          promptUser();
+        })
+        .catch((err) => {
+          console.log(err.message);
+          promptUser();
+        });
+    });
+}
 
-console.log('Welcome to the Employee Tracker!');
-promptUser();
+// Add role prompt
+function addRolePrompt() {
+  inquirer
+    .prompt([
+      {
+        type: 'input',
+        name: 'title',
+        message: 'Enter the title of the role:',
+      },
+      {
+        type: 'input',
+        name: 'salary',
+        message: 'Enter the salary for the role:',
+      },
+      {
+        type: 'input',
+        name: 'departmentId',
+        message: 'Enter the department ID for the role:',
+      },
+    ])
+    .then((answers) => {
+      role
+        .addRole(answers.title, answers.salary, answers.departmentId)
+        .then(() => {
+          console.log('Role added successfully!');
+          promptUser();
+        })
+        .catch((err) => {
+          console.log(err.message);
+          promptUser();
+        });
+    });
+}
+
+// Add employee prompt
+function addEmployeePrompt() {
+  inquirer
+    .prompt([
+      {
+        type: 'input',
+        name: 'firstName',
+        message: "Enter the employee's first name:",
+      },
+      {
+        type: 'input',
+        name: 'lastName',
+        message: "Enter the employee's last name:",
+      },
+      {
+        type: 'input',
+        name: 'roleId',
+        message: "Enter the employee's role ID:",
+      },
+      {
+        type: 'input',
+        name: 'managerId',
+        message: "Enter the employee's manager ID:",
+      },
+    ])
+    .then((answers) => {
+      employee
+        .addEmployee(answers.firstName, answers.lastName, answers.roleId, answers.managerId)
+        .then(() => {
+          console.log('Employee added successfully!');
+          promptUser();
+        })
+        .catch((err) => {
+          console.log(err.message);
+          promptUser();
+        });
+    });
+}
+
+// Update employee role prompt
+function updateEmployeeRolePrompt() {
+  inquirer
+    .prompt([
+      {
+        type: 'input',
+        name: 'employeeId',
+        message: "Enter the employee's ID:",
+      },
+      {
+        type: 'input',
+        name: 'roleId',
+        message: "Enter the new role ID for the employee:",
+      },
+    ])
+    .then((answers) => {
+      employee
+        .updateEmployeeRole(answers.employeeId, answers.roleId)
+        .then(() => {
+          console.log('Employee role updated successfully!');
+          promptUser();
+        })
+        .catch((err) => {
+          console.log(err.message);
+          promptUser();
+        });
+    });
+}
+
+// View all departments
+function viewAllDepartments() {
+  department
+    .getAllDepartments()
+    .then((departments) => {
+      console.log('\nDepartments:\n');
+      console.table(departments);
+      promptUser();
+    })
+    .catch((err) => {
+      console.log(err.message);
+      promptUser();
+    });
+}
+
+// View all roles
+function viewAllRoles() {
+  role
+    .getAllRoles()
+    .then((roles) => {
+      console.log('\nRoles:\n');
+      console.table(roles);
+      promptUser();
+    })
+    .catch((err) => {
+      console.log(err.message);
+      promptUser();
+    });
+}
+
+// View all employees
+function viewAllEmployees() {
+  employee
+    .getAllEmployees()
+    .then((employees) => {
+      console.log('\nEmployees:\n');
+      console.table(employees);
+      promptUser();
+    })
+    .catch((err) => {
+      console.log(err.message);
+      promptUser();
+    });
+}
+
+app.listen(PORT, () => {
+  console.log(`Server listening on PORT ${PORT}`);
+  promptUser();
+});
