@@ -25,7 +25,7 @@ Installation includes several packages:
 
 2. Follow the package installation steps
 
-3. Locate into the .env file and enter your MySQL password into line 3 at the `DB_PASSWORD=<your password here>` position
+3. Locate into the .env file and enter your MySQL password into line 3 at the `DB_PASSWORD=<your_password_here>` position
 
 4. Connect to MySQL database:
     - Open the terminal inside of the `db` file
