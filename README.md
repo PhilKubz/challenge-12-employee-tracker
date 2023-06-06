@@ -43,7 +43,7 @@ Installation includes several packages:
 
 ## Demonstration
 
-[EMployee Tracker Video Demonstration](https://drive.google.com/file/d/179dDp4x00t7UXjVzlv3IFK5gxq2tLc3c/view)
+[Employee Tracker Video Demonstration](https://drive.google.com/file/d/179dDp4x00t7UXjVzlv3IFK5gxq2tLc3c/view)
 
 ## License
 
